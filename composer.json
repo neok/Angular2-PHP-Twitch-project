@@ -1,0 +1,21 @@
+{
+  "name": "Filter countries,currencies",
+  "description": "Test Description",
+  "keywords": ["filter","database","mysql"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Evgeny Bulatov",
+      "email": "developer351@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "require":{
+    "php": ">=5.5.0"
+  },
+  "autoload":{
+    "psr-4":{
+      "Twich\\": "app/"
+    }
+  }
+}
