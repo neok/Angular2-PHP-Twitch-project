@@ -10,5 +10,5 @@ namespace Twitch\Controllers;
         $this->container = $container;
     }
 
-    public function 
+    
 }
