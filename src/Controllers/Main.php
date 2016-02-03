@@ -3,6 +3,7 @@ namespace Twitch\Controllers;
 
 use Pimple\Container;
 use Symfony\Component\HttpFoundation\Response;
+use Twitch\Services\TwitchKraken;
 
 class Main
 {
@@ -24,7 +25,13 @@ class Main
          */
         $response = $this->container['response'];
 
-        $response->setContent($twig->render('index.html.twig', ['test' => 'hello']));
+        /**
+         * @var TwitchKraken $twitch
+         */
+        $twitch = $this->container['twitch'];
+
+
+        $response->setContent($twig->render('index.html.twig', ['games' => $twitch->getGames()]));
 
     }
 }

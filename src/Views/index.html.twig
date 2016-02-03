@@ -5,6 +5,10 @@
     <title>Title</title>
 </head>
 <body>
-{{ test }}
+<ul>
+    {% for game in games %}
+        <li><img src="{{ game.img }}" alt="img" /> {{ game.name|e }}</li>
+    {% endfor %}
+</ul>
 </body>
 </html>
