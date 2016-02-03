@@ -54,13 +54,19 @@ switch ($routeInfo[0]) {
         $className = $routeInfo[1][0];
         $method = $routeInfo[1][1];
         $vars = $routeInfo[2];
-//examples -todo move to container.php
+
         $container[$className] = function() use ($container, $className) {
             return new $className($container);
         };
 
         $container['db'] = function($c) {
             return new \PDO('mysql:host=localhost;dbname=db_crm', 'root', 'root');
+        };
+        $container['twig'] = function($t) {
+            return new \Twig_Environment(new \Twig_Loader_Filesystem(__DIR__ . '/Views/'));
+        };
+        $container['response'] = function() use ($response) {
+            return $response;
         };
 
 

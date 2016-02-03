@@ -1,4 +1,4 @@
 <?php
 return [
-    ['GET', '/', ['Twitch\Controllers\Main', 'index']],
+    ['GET', '/', ['Twitch\Controllers\Main', 'index'], ['']],
 ];
