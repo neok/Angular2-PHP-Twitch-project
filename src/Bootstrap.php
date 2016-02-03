@@ -1,11 +1,13 @@
 <?php
 namespace Twitch;
+use GuzzleHttp\Client;
 use Pimple\Container;
 use Pimple\Tests\Fixtures\PimpleServiceProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Twitch\Controllers\Main;
 use Twitch\Controllers\MainController;
+use Twitch\Services\TwitchKraken;
 use Whoops\Handler\PrettyPageHandler;
 
 require __DIR__ . './../vendor/autoload.php';
@@ -67,6 +69,10 @@ switch ($routeInfo[0]) {
         };
         $container['response'] = function() use ($response) {
             return $response;
+        };
+
+        $container['twitch'] = function ($c)  {
+            return new TwitchKraken(new Client());
         };
 
 
