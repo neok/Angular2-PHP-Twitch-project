@@ -2,6 +2,7 @@
 namespace Twitch\Controllers;
 
 use Pimple\Container;
+use Symfony\Component\HttpFoundation\Response;
 
 class Main
 {
@@ -14,7 +15,16 @@ class Main
 
     public function index($args)
     {
-        var_dump($this->container['db']);
+        /**
+         * @var \Twig_Environment $twig
+         */
+        $twig = $this->container['twig'];
+        /**
+         * @var Response $response
+         */
+        $response = $this->container['response'];
+
+        $response->setContent($twig->render('index.html.twig', ['test' => 'hello']));
 
     }
 }
