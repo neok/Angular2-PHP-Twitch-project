@@ -25,7 +25,8 @@
     "nikic/fast-route": "^0.7.0",
     "guzzlehttp/guzzle": "^6.1",
     "twig/twig": "~1.0",
-    "symfony/http-foundation": "^3.0"
+    "symfony/http-foundation": "^3.0",
+    "ext-memcached": "*"
   },
   "autoload": {
     "psr-4": {
