@@ -46,7 +46,7 @@ namespace Twitch\Controllers;
      /**
       * @param Container $response
       */
-     public function setResponse(Container $response)
+     public function setResponse(Response $response)
      {
         $this->response = $response;
      }
@@ -77,7 +77,7 @@ namespace Twitch\Controllers;
 
      public function getResponse()
      {
-         return $this;
+         return $this->response;
      }
 
      public function getTwitch()
