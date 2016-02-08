@@ -4,6 +4,7 @@ namespace Twitch\Controllers;
 
 
  use Twitch\Services\TwitchKraken;
+ use Symfony\Component\HttpFoundation\Response;
 
  abstract class AbstractController
 {
@@ -19,13 +20,18 @@ namespace Twitch\Controllers;
     {
         if(array_key_exists('request', $container) && $container['request'] instanceOf Symfony\Component\HttpFoundation\Request){
             $this->setRequest($container['request']);
-        }else if(array_key_exists('response', $container) && $container['response'] instanceOf Symfony\Component\HttpFoundation\Response){
-            $this->setResponse($container['request']);
-        }else if(array_key_exists('twig', $container) && $container['twig'] instanceOf Symfony\Component\HttpFoundation\Twig){
+        }
+        if(array_key_exists('response', $container) && $container['response'] instanceOf Symfony\Component\HttpFoundation\Response){
+            $this->setResponse($container['response']);
+        }
+
+        if(array_key_exists('twig', $container) && $container['twig'] instanceOf Symfony\Component\HttpFoundation\Twig){
              $this->setTwig($container['twig']);
-        }else if(array_key_exists('twitch', $container) && $container['twitch'] instanceOf Twitch\Services\TwitchKraken){
+        }
+        if(array_key_exists('twitch', $container) && $container['twitch'] instanceOf Twitch\Services\TwitchKraken){
              $this->setTwitch($container['twitch']);
         }
+
     }
 
      /**
@@ -40,10 +46,9 @@ namespace Twitch\Controllers;
      /**
       * @param Container $response
       */
-     public function setResponse(Response $response)
+     public function setResponse(Container $response)
      {
         $this->response = $response;
-         return $this;
      }
 
      /**
@@ -72,7 +77,7 @@ namespace Twitch\Controllers;
 
      public function getResponse()
      {
-         return $this->response;
+         return $this;
      }
 
      public function getTwitch()

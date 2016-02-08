@@ -2,10 +2,10 @@
 namespace Twitch\Controllers;
 
 use Pimple\Container;
-use Symfony\Component\HttpFoundation\Response;
+
 use Twitch\Services\TwitchKraken;
 
-class Main
+class Main extends AbstractController
 {
 
     public function index($args)
@@ -13,19 +13,20 @@ class Main
         /**
          * @var \Twig_Environment $twig
          */
-        $twig = $this->container['twig'];
+        $twig = $this->getTwig();
         /**
          * @var Response $response
          */
-        $response = $this->container['response'];
+        $response = $this->getResponse();
 
         /**
          * @var TwitchKraken $twitch
          */
-        $twitch = $this->container['twitch'];
+        $twitch = $this->getTwitch();
 
+        var_dump($response);
+        exit;
 
-        $response->setContent($twig->render('index.html.twig', ['games' => $twitch->getGames()]));
-
+        $response->sendContent($twig->render('index.html.twig', ['games' => $twitch->getGames()]));
     }
 }
