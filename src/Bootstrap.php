@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Twitch\Controllers\Main;
 use Twitch\Controllers\MainController;
+use Twitch\Services\CacheMemcached;
 use Twitch\Services\TwitchKraken;
 use Whoops\Handler\PrettyPageHandler;
 
@@ -75,7 +76,7 @@ switch ($routeInfo[0]) {
         };
 
         $container['twitch'] = function ($c)  {
-            return new TwitchKraken(new Client());
+            return new TwitchKraken(new Client(), new CacheMemcached());
         };
 
 

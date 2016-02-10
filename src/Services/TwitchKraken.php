@@ -2,7 +2,6 @@
 namespace Twitch\Services;
 
 use GuzzleHttp\Client;
-use Psr\Http\Message\StreamInterface;
 
 class TwitchKraken
 {
@@ -14,17 +13,28 @@ class TwitchKraken
      */
     protected $client;
 
-    public function __construct(Client $client)
+    /**
+     * @var CacheMemcached
+     */
+    protected $cache;
+
+    public function __construct(Client $client, CacheMemcached $cache)
     {
         $this->client = $client;
+        $this->cache = $cache;
     }
 
     public function getGames()
     {
-        $result = $this->client->request('GET', self::API_URL . 'games/top?limit=10&offset=0');
-        $data = [];
-        if ($result->getStatusCode() == '200') {
-            $data  = $this->processBody(json_decode($result->getBody()->getContents()));
+        $data = $this->cache->get('games');
+        if (!$data) {
+            $result = $this->client->request('GET', self::API_URL . 'games/top?limit=10&offset=0');
+            $data = [];
+            if ($result->getStatusCode() == '200') {
+                $data  = $this->processBody(json_decode($result->getBody()->getContents()));
+                $this->cache->set('games', $data, 300);
+            }
+
         }
 
         return $data;
@@ -32,12 +42,19 @@ class TwitchKraken
 
     public function searchGame($gameName)
     {
-        $result = $this->client->request('GET', self::API_URL . 'search/streams?q=' . urlencode((string)$gameName) . '&limit=25&offset=0');
-        $data = [];
-        if ($result->getStatusCode() == '200') {
-            $data = $this->processStreams(json_decode($result->getBody()->getContents()));
+
+        $data = $this->cache->get('search_' . $gameName);
+
+        if (!$data) {
+            $result = $this->client->request('GET',
+                self::API_URL . 'search/streams?q=' . urlencode((string)$gameName) . '&limit=25&offset=0');
+            if ($result->getStatusCode() == '200') {
+                $data = $this->processStreams(json_decode($result->getBody()->getContents()));
+                $this->cache->set('search_' . $gameName, $data, 300);
+            }
 
         }
+
         return $data;
     }
 
