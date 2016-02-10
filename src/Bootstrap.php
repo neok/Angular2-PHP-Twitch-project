@@ -70,6 +70,9 @@ switch ($routeInfo[0]) {
         $container['response'] = function() use ($response) {
             return $response;
         };
+        $container['request'] = function() use ($response) {
+            return $response;
+        };
 
         $container['twitch'] = function ($c)  {
             return new TwitchKraken(new Client());

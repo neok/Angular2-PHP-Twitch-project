@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<ul>
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <ul class="nav nav-pills nav-stacked">
+
     {% for game in games %}
-        <li><img src="{{ game.img }}" alt="img" /> {{ game.name|e }}</li>
+        <li><a href="/game/{{ game.name|e }}"> <img src="{{ game.img }}" alt="img" /> {{ game.name|e }}</a></li>
     {% endfor %}
-</ul>
-</body>
-</html>
+    </ul>
+{% endblock %}

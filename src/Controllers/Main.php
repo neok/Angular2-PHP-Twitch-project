@@ -5,33 +5,35 @@ use Pimple\Container;
 use Symfony\Component\HttpFoundation\Response;
 use Twitch\Services\TwitchKraken;
 
-class Main
+class Main extends AbstractController
 {
-    private $contrainer;
-
-    public function __construct(Container $container)
+    /**
+     * Index
+     * @throws \Exception
+     */
+    public function index()
     {
-        $this->container = $container;
+        $this->response->setContent($this->twig->render('index.html.twig',
+            ['games' => $this->getTwitchService()->getGames()]));
+
     }
 
-    public function index($args)
+    public function game($args)
     {
-        /**
-         * @var \Twig_Environment $twig
-         */
-        $twig = $this->container['twig'];
-        /**
-         * @var Response $response
-         */
-        $response = $this->container['response'];
+        $result = '';
+        if (array_key_exists('id', $args)) {
+            $result = $this->getTwitchService()->searchGame($args['id']);
+        }
+        $this->response->setContent($this->twig->render('games.html.twig',
+            ['game_list' => $result]));
+    }
 
-        /**
-         * @var TwitchKraken $twitch
-         */
-        $twitch = $this->container['twitch'];
-
-
-        $response->setContent($twig->render('index.html.twig', ['games' => $twitch->getGames()]));
-
+    /**
+     * @return TwitchKraken
+     * @throws \InvalidArgumentException
+     */
+    private function getTwitchService()
+    {
+        return $this->getContainer()->offsetGet('twitch');
     }
 }
