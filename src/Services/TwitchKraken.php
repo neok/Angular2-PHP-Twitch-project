@@ -27,6 +27,7 @@ class TwitchKraken
     public function getGames()
     {
         $data = $this->cache->get('games');
+
         if (!$data) {
             $result = $this->client->request('GET', self::API_URL . 'games/top?limit=10&offset=0');
             $data = [];
