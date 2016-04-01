@@ -18,6 +18,14 @@ class Main extends AbstractController
 
     }
 
+    /**
+     *
+     */
+    public function json()
+    {
+        echo json_encode($this->getTwitchService()->getGames());
+    }
+
     public function game($args)
     {
         $result = '';

@@ -19040,21 +19040,17 @@ var ReactDOM = require('react-dom');
 
 ReactDOM.render(React.createElement('h1', null, 'Trcy'), document.getElementById('header'));
 
+var data = [{ id: 1, name: "streamer1", text: "Steaming some game" }, { id: 2, name: "streamer2", text: "Steaming some game2" }];
+
 var GameItem = React.createClass({
     displayName: 'GameItem',
 
+    rawMarkup: function () {
+        var rawMarkup = marked(this.props.children.toString(), { sanitize: true });
+        return { __html: rawMarkup };
+    },
     render: function () {
-        return React.createElement(
-            'div',
-            { className: 'CommentItem' },
-            React.createElement(
-                'h4',
-                { className: 'commentAuthor' },
-                this.props.author,
-                this.props.pro
-            ),
-            this.props.children
-        );
+        return React.createElement('li', { className: 'item' });
     }
 });
 
@@ -19062,19 +19058,17 @@ var GameList = React.createClass({
     displayName: 'GameList',
 
     render: function () {
+        var itemNodes = this.props.data.map(function (item) {
+            return React.createElement(
+                GameItem,
+                { key: item.name },
+                item.img
+            );
+        });
         return React.createElement(
-            'div',
-            { className: 'gameList' },
-            React.createElement(
-                GameItem,
-                { author: 'neok', pro: 'GG' },
-                'First game'
-            ),
-            React.createElement(
-                GameItem,
-                { author: 'zeo' },
-                'Second game'
-            )
+            'ul',
+            { 'class': 'nav nav-pills nav-stacked' },
+            itemNodes
         );
     }
 });
@@ -19087,25 +19081,11 @@ var GameBox = React.createClass({
             'div',
             { className: 'gameBox' },
             'One',
-            React.createElement(GameList, null)
+            React.createElement(GameList, { data: this.props.data })
         );
     }
 });
 
-ReactDOM.render(React.createElement(GameBox, null), document.getElementById('content'));
-//
-//var CommentBox = React.createClass({
-//    render: function() {
-//        return (
-//            <div className="commentBox">
-//                Hello, world! I am a CommentBox.
-//            </div>
-//        );
-//    }
-//});
-//ReactDOM.render(
-//    <CommentBox />,
-//    document.getElementById('content')
-//);
+ReactDOM.render(React.createElement(GameBox, { url: '/json' }), document.getElementById('content'));
 
 },{"react":158,"react-dom":29}]},{},[159]);
