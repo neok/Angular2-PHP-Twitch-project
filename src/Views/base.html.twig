@@ -10,25 +10,24 @@
     <title>Twitch</title>
 </head>
 <body>
-{%  block page_header %}
-<div class="page-header">
+<div id="app">
+    {%  block page_header %}
+    <div class="page-header">
+        <div id="content"></div>
+    </div>
 
-    <div id="header"></div>
+    {% endblock %}
+    {% block body %}
 
-        <small>Main List</small>
-    <ul class="nav nav-pills">
-        <li role="presentation" class="active"><a href="/">Home</a></li>
-        <li role="presentation"><a href="/streams">Streams</a></li>
-        <li role="presentation"><a href="/search">Search</a></li>
-        <li role="presentation"><a href="/about">About</a></li>
-    </ul>
-    <div id="content"></div>
+        <ul class="nav nav-pills nav-stacked">
+        </ul>
+        <div id="form-data">
+
+        </div>
+    {% endblock %}
+
 </div>
-
-{% endblock %}
-{% block body %}
-
-{% endblock %}
+<script src="/public/js/bundle.js"></script>
 
 </body>
 </html>

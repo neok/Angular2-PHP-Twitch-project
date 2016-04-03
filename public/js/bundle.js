@@ -23906,7 +23906,11 @@ module.exports = require('./lib/React');
 },{"./lib/React":83}],216:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
-var ReactRouter = require('react-router');
+var Router = require('react-router').Router;
+var Route = require('react-router').Route;
+var Link = require('react-router').Link;
+var browserHistory = require('react-router').hashHistory;
+var IndexRoute = require('react-router').IndexRoute;
 
 var FormClass = React.createClass({
     displayName: 'FormClass',
@@ -23952,10 +23956,6 @@ var FormClass = React.createClass({
     }
 });
 
-ReactDOM.render(React.createElement('h1', null, 'Trcy'), document.getElementById('header'));
-
-var data = [{ id: 1, name: "streamer1", text: "Steaming some game" }, { id: 2, name: "streamer2", text: "Steaming some game2" }];
-
 var GameItem = React.createClass({
     displayName: 'GameItem',
 
@@ -23964,9 +23964,8 @@ var GameItem = React.createClass({
             'li',
             { className: 'item' },
             React.createElement(
-                'a',
-                { href: `/game/${ this.props.children }` },
-                ' ',
+                Link,
+                { to: `/games/${ this.props.children }` },
                 React.createElement('img', { src: this.props.img, alt: 'img' }),
                 ' ',
                 this.props.children
@@ -23979,6 +23978,7 @@ var GameList = React.createClass({
     displayName: 'GameList',
 
     render: function () {
+
         var itemNodes = this.props.data.map(function (item) {
             return React.createElement(
                 GameItem,
@@ -24004,13 +24004,12 @@ var GameBox = React.createClass({
     handleFormSubmit: function (newItem) {
         var data = this.state.data;
         var newData = data.concat([newItem]);
-        console.log(newData);
         this.setState({ data: newData });
     },
 
     loadDataFromServer: function () {
         $.ajax({
-            url: this.props.url,
+            url: 'json',
             method: "GET",
             dataType: "json",
             cache: false,
@@ -24024,19 +24023,237 @@ var GameBox = React.createClass({
     },
     componentDidMount: function () {
         this.loadDataFromServer();
-        setTimeout(this.props.interval);
     },
     render: function () {
         return React.createElement(
             'div',
             { className: 'gameBox' },
-            'One',
             React.createElement(GameList, { data: this.state.data, interval: 2000 }),
             React.createElement(FormClass, { onFormSubmit: this.handleFormSubmit })
         );
     }
 });
+var About = React.createClass({
+    displayName: 'About',
 
-ReactDOM.render(React.createElement(GameBox, { url: '/json' }), document.getElementById('content'));
+    render: function () {
+        return React.createElement(
+            'div',
+            { className: 'about' },
+            'this is about page'
+        );
+    }
+});
+
+var Search = React.createClass({
+    displayName: 'Search',
+
+    render: function () {
+        return React.createElement(
+            'div',
+            { className: 'Search' },
+            'this is Search page'
+        );
+    }
+});
+
+var Streams = React.createClass({
+    displayName: 'Streams',
+
+    render: function () {
+        return React.createElement(
+            'div',
+            { className: 'streams' },
+            'this is streams page'
+        );
+    }
+});
+
+var StreamItem = React.createClass({
+    displayName: 'StreamItem',
+
+    render: function () {
+        return React.createElement(
+            'div',
+            { key: this.props.id, className: 'col-md-4' },
+            ' ',
+            React.createElement('img', { src: this.props.preview, alt: 'img' }),
+            React.createElement(
+                'p',
+                null,
+                React.createElement(
+                    'strong',
+                    null,
+                    'Streamer:'
+                ),
+                ' ',
+                this.props.name
+            ),
+            React.createElement(
+                'span',
+                null,
+                React.createElement(
+                    'strong',
+                    null,
+                    'Viewers count:'
+                ),
+                ' ',
+                this.props.viewers
+            )
+        );
+    }
+});
+
+var StreamList = React.createClass({
+    displayName: 'StreamList',
+
+    render: function () {
+        var nodes = this.props.data.map(function (data) {
+            return React.createElement(StreamItem, { id: data.id, preview: data.preview, name: data.name, viewers: data.viewers });
+        });
+
+        return React.createElement(
+            'div',
+            { className: 'streamList' },
+            nodes
+        );
+    }
+});
+
+var GameInfo = React.createClass({
+    displayName: 'GameInfo',
+
+    getInitialState: function () {
+        return { name: [], data: [] };
+    },
+    componentDidMount: function () {
+        var currentGameName = this.props.params.name || '';
+        var that = this;
+        $.get('game/' + encodeURIComponent(currentGameName), function (result) {
+            that.setState({
+                name: currentGameName,
+                data: JSON.parse(result)
+            });
+        });
+    },
+    render: function () {
+        return React.createElement(
+            'div',
+            { className: 'ultraGame' },
+            'This is:',
+            React.createElement(
+                'p',
+                null,
+                this.state.name,
+                ' Stream List'
+            ),
+            React.createElement(StreamList, { data: this.state.data })
+        );
+    }
+});
+
+var SimpleGame = React.createClass({
+    displayName: 'SimpleGame',
+
+    render: function () {
+        return React.createElement(
+            'div',
+            { className: 'game-initial-data' },
+            'Current game',
+            this.props.children
+        );
+    }
+});
+
+var Main = React.createClass({
+    displayName: 'Main',
+
+    render: function () {
+        return React.createElement(
+            'div',
+            { className: 'pageHeader' },
+            React.createElement(
+                'h1',
+                null,
+                'React.js twitch Api example'
+            ),
+            React.createElement(
+                'nav',
+                null,
+                React.createElement(
+                    'ul',
+                    { className: 'nav nav-pills' },
+                    React.createElement(
+                        'li',
+                        { role: 'presentation' },
+                        React.createElement(
+                            Link,
+                            { to: '/' },
+                            'Home'
+                        )
+                    ),
+                    React.createElement(
+                        'li',
+                        { role: 'presentation' },
+                        React.createElement(
+                            Link,
+                            { to: 'streams' },
+                            'Streams'
+                        )
+                    ),
+                    React.createElement(
+                        'li',
+                        { role: 'presentation' },
+                        React.createElement(
+                            Link,
+                            { to: 'search' },
+                            'Search'
+                        )
+                    ),
+                    React.createElement(
+                        'li',
+                        { role: 'presentation' },
+                        React.createElement(
+                            Link,
+                            { to: 'about' },
+                            'About'
+                        )
+                    ),
+                    React.createElement(
+                        'li',
+                        { role: 'presentation' },
+                        React.createElement(
+                            Link,
+                            { to: 'games/dota2', activeClassName: 'active' },
+                            'Dota2'
+                        )
+                    )
+                )
+            ),
+            React.createElement(
+                'div',
+                { className: 'mainData' },
+                this.props.children
+            )
+        );
+    }
+});
+
+setTimeout(function () {
+    ReactDOM.render(React.createElement(
+        Router,
+        { history: browserHistory },
+        React.createElement(
+            Route,
+            { path: '/', component: Main },
+            React.createElement(IndexRoute, { component: GameBox }),
+            React.createElement(Route, { path: 'about', component: About }),
+            React.createElement(Route, { path: 'game', component: SimpleGame }),
+            React.createElement(Route, { path: 'games/:name', component: GameInfo }),
+            React.createElement(Route, { path: 'streams', component: Streams }),
+            React.createElement(Route, { path: 'search', component: Search })
+        )
+    ), document.getElementById('app'));
+}, 1000);
 
 },{"react":215,"react-dom":2,"react-router":30}]},{},[216]);

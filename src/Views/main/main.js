@@ -1,8 +1,10 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var ReactRouter = require('react-router');
-
-
+var Router = require('react-router').Router;
+var Route = require('react-router').Route;
+var Link = require('react-router').Link;
+var browserHistory = require('react-router').hashHistory;
+var IndexRoute = require('react-router').IndexRoute;
 
 var FormClass = React.createClass({
     getInitialState: function() {
@@ -44,21 +46,12 @@ var FormClass = React.createClass({
     }
 });
 
-ReactDOM.render(
-    React.createElement('h1', null, 'Trcy'),
-    document.getElementById('header')
-);
-
-var data = [
-    { id: 1, name: "streamer1", text: "Steaming some game"},
-    { id: 2, name: "streamer2", text: "Steaming some game2"}
-];
 
 var GameItem = React.createClass({
     render: function() {
         return (
             <li className="item">
-                <a href={`/game/${this.props.children}`}> <img src={ this.props.img } alt="img" /> {this.props.children}</a>
+                <Link to={`/games/${this.props.children}`} ><img src={ this.props.img } alt="img" /> {this.props.children}</Link>
             </li>
         );
     }
@@ -66,6 +59,7 @@ var GameItem = React.createClass({
 
 var GameList = React.createClass({
     render: function() {
+
         var itemNodes = this.props.data.map(function(item) {
            return (
                <GameItem key={item.name} img={item.img}>
@@ -85,19 +79,18 @@ var GameList = React.createClass({
 
 var GameBox = React.createClass({
     getInitialState: function() {
-        return {data: []};
+        return {data: []}
     },
 
     handleFormSubmit: function(newItem) {
         var data = this.state.data;
         var newData = data.concat([newItem]);
-        console.log(newData);
         this.setState({data: newData});
     },
 
     loadDataFromServer: function() {
         $.ajax({
-            url: this.props.url,
+            url:'json',
             method: "GET",
             dataType: "json",
             cache: false,
@@ -112,25 +105,137 @@ var GameBox = React.createClass({
     },
     componentDidMount: function() {
         this.loadDataFromServer();
-        setTimeout(this.props.interval)
     },
     render: function() {
         return (
             <div className="gameBox">
-                One
                 <GameList data={this.state.data} interval={2000} />
                 <FormClass onFormSubmit={this.handleFormSubmit} />
             </div>
         );
     }
 });
+var About = React.createClass({
+    render: function() {
+        return ( <div className="about">this is about page</div>);
+    }
+});
+
+var Search = React.createClass({
+    render: function() {
+        return ( <div className="Search">this is Search page</div>);
+    }
+});
+
+var Streams = React.createClass({
+    render: function() {
+        return ( <div className="streams">this is streams page</div>);
+    }
+});
+
+var StreamItem = React.createClass({
+   render: function() {
+       return (
+           <div key={this.props.id} className="col-md-4"> <img src={ this.props.preview } alt="img" />
+               <p><strong>Streamer:</strong> { this.props.name }</p>
+               <span><strong>Viewers count:</strong> { this.props.viewers }</span>
+           </div>
+       );
+   }
+});
+
+var StreamList = React.createClass({
+    render: function() {
+        var nodes = this.props.data.map(function(data) {
+            return (
+                <StreamItem id={data.id} preview={data.preview} name={data.name} viewers={data.viewers}>
+                </StreamItem>
+            )
+        });
+
+        return (
+            <div className="streamList">
+                {nodes}
+            </div>
+        );
+    }
+});
 
 
+var GameInfo = React.createClass({
+    getInitialState: function() {
+        return {name: [], data: []};
+    },
+    componentDidMount: function() {
+        var currentGameName = this.props.params.name || '';
+        var that = this;
+        $.get('game/' + encodeURIComponent(currentGameName), function(result) {
+            that.setState({
+                name: currentGameName,
+                data: JSON.parse(result)
+            })
+        });
 
 
+    },
+    render: function() {
+        return (
+            <div className="ultraGame">
+                This is:
+                <p>{this.state.name} Stream List</p>
 
-ReactDOM.render(
-    <GameBox url="/json" />,
-    document.getElementById('content')
-);
+                <StreamList data={this.state.data} />
+            </div>
+        );
+    }
+});
+
+var SimpleGame = React.createClass({
+   render: function() {
+       return (
+           <div className="game-initial-data">
+               Current game
+                {this.props.children}
+           </div>
+       );
+   }
+});
+
+var Main = React.createClass({
+    render: function() {
+        return (<div className="pageHeader">
+            <h1>React.js twitch Api example</h1>
+            <nav>
+                <ul className="nav nav-pills">
+                    <li role="presentation"><Link to="/">Home</Link></li>
+                    <li role="presentation"><Link to="streams">Streams</Link></li>
+                    <li role="presentation"><Link to="search">Search</Link></li>
+                    <li role="presentation"><Link to="about">About</Link></li>
+                    <li role="presentation"><Link to="games/dota2" activeClassName="active">Dota2</Link></li>
+                </ul>
+            </nav>
+            <div className="mainData">
+                {this.props.children}
+            </div>
+        </div>
+        );
+    }
+});
+
+
+setTimeout(function() {
+    ReactDOM.render(
+        <Router history={browserHistory}>
+            <Route path="/" component={Main}>
+                <IndexRoute component={GameBox}></IndexRoute>
+                <Route path="about" component={About}/>
+                <Route path="game" component={SimpleGame}></Route>
+                <Route path="games/:name" component={GameInfo} />
+                <Route path="streams" component={Streams}/>
+                <Route path="search" component={Search}/>
+            </Route>
+        </Router>
+        , document.getElementById('app'));
+}, 1000);
+
 
