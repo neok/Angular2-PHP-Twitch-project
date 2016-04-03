@@ -48,7 +48,7 @@ class TwitchKraken
 
         if (!$data) {
             $result = $this->client->request('GET',
-                self::API_URL . 'search/streams?q=' . urlencode((string)$gameName) . '&limit=25&offset=0');
+                self::API_URL . 'search/streams?q=' . urlencode((string)$gameName) . '&limit=100&offset=0');
             if ($result->getStatusCode() == '200') {
                 $data = $this->processStreams(json_decode($result->getBody()->getContents()));
                 $this->cache->set('search_' . $gameName, $data, 300);
@@ -66,8 +66,11 @@ class TwitchKraken
     private function processStreams(\StdClass $stream)
     {
         $result = [];
+        $count = 0;
         foreach($stream->streams as $key => $data) {
-
+            if ($count >= 10) {
+                break;
+            }
             $result[] = [
                 'id' => $data->_id,
                 'preview' => $data->preview->medium,
@@ -76,6 +79,7 @@ class TwitchKraken
                 'name' => $data->channel->display_name,
                 'game' => $data->channel->game
             ];
+            $count++;
         }
 
         return $result;

@@ -44,4 +44,9 @@ class Main extends AbstractController
     {
         return $this->getContainer()->offsetGet('twitch');
     }
+
+    public function form()
+    {
+        $this->response->setContent($this->twig->render('form.html.twig', array()));
+    }
 }
