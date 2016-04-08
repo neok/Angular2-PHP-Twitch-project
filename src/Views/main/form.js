@@ -26,13 +26,13 @@ var FormClass = React.createClass({
             <div className="gameBoxComments">
                 <form className="formComment" onSubmit={this.handleSubmit}>
                     <input type="text"
-                        placeholder="name"
-                        value={this.state.authorName}
-                        onChange={this.handleAuthorStateChange}
+                           placeholder="name"
+                           value={this.state.authorName}
+                           onChange={this.handleAuthorStateChange}
                     />
                     <input type="text" placeholder="Say something..."
-                        value={this.state.message}
-                        onChange={this.handleTextChange}
+                           value={this.state.message}
+                           onChange={this.handleTextChange}
                     />
                     <input type="submit" value="Post" />
                 </form>
@@ -41,7 +41,6 @@ var FormClass = React.createClass({
     }
 });
 
-ReactDOM.render(
-    <FormClass />,
-    document.getElementById('form-data')
-);
+module.exports = {
+    form: FormClass
+}

@@ -1,0 +1,36 @@
+{
+  "name": "20",
+  "version": "1.0.0",
+  "description": "React js project",
+  "main": "bundle.js",
+  "dependencies": {
+    "react-route": "^1.0.3"
+  },
+  "devDependencies": {
+    "browserify": "^13.0.0",
+    "gulp": "^3.9.1",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^1.5.3",
+    "gulp-util": "^3.0.7",
+    "reactify": "^1.1.1",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neok/TwitchPhpExample.git"
+  },
+  "keywords": [
+    "react",
+    "tutorial"
+  ],
+  "author": "neok",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/neok/TwitchPhpExample/issues"
+  },
+  "homepage": "https://github.com/neok/TwitchPhpExample#readme"
+}
