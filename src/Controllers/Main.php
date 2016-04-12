@@ -37,6 +37,23 @@ class Main extends AbstractController
 //            ['game_list' => $result]));
     }
 
+    public function product($args)
+    {
+        $data = $args['id'];
+        if ($data == 0) {
+            $result = [
+              ["value" => 0, "label" => "All"],
+              ["value" => 1, "label" => "PckeeperLive2014"],
+              ["value" => 2, "label" => "BroImbaLurker"]
+            ];
+        } else {
+            $result = [
+                ["value" => 2, "label" => "BroImbaLurker"]
+            ];
+        }
+        echo json_encode($result);
+    }
+
     /**
      * @return TwitchKraken
      * @throws \InvalidArgumentException

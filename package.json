@@ -4,7 +4,10 @@
   "description": "React js project",
   "main": "bundle.js",
   "dependencies": {
-    "react-route": "^1.0.3"
+    "react-route": "^1.0.3",
+    "react-select": "~1.0.0-beta12",
+    "jquery": "~2.2.3",
+    "underscore": "~1.8.3"
   },
   "devDependencies": {
     "browserify": "^13.0.0",
