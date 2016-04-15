@@ -5,15 +5,15 @@ var React = require('react'),
 var navigation = React.createClass({
     render: function() {
         return (<div className="pageHeader">
-                <img className="logo" src={this.props.logo_path} alt="logo" />
-                <h1>{this.props.header_text}</h1>
+                <h1>React.js twitch Api example</h1>
                 <nav>
                     <ul className="nav nav-pills">
                         <li role="presentation"><Link to="/">Home</Link></li>
-                        <li role="presentation"><Link to="interactive">Interactive</Link></li>
-                        <li role="presentation"><Link to="multiple">Multiple</Link></li>
-                        <li role="presentation"><Link to="reusable">Reusable</Link></li>
-                        <li role="presentation"><Link to="form">Form</Link></li>
+                        <li role="presentation"><Link to="jsx">JSX Concepts</Link></li>
+                        <li role="presentation"><Link to="search">Search</Link></li>
+                        <li role="presentation"><Link to="about">About</Link></li>
+                        <li role="presentation"><Link to="button" activeClassName="active">Dynamic button</Link></li>
+                        <li role="presentation"><Link to="tutorial">Examples</Link></li>
                     </ul>
                 </nav>
                 <div className="mainData">
@@ -25,5 +25,5 @@ var navigation = React.createClass({
 });
 
 module.exports = {
-    Navigation: navigation
+    Main: navigation
 }

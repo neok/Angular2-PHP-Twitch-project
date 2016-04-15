@@ -56,12 +56,9 @@ var ProductSelect = React.createClass({
             $.get('/product/0', function(data) {
                 if (data) {
                     var newData = JSON.parse(data);
-                    console.log(newData);
-                    console.log(opts);
                     that.setState({
                         opts: newData
                     });
-                    console.log(that.state)
                 }
 
             })
@@ -69,7 +66,7 @@ var ProductSelect = React.createClass({
     },
 
     render: function() {
-console.log(this.state.opts);
+
         return (
             <div>
                 <ReactSelect

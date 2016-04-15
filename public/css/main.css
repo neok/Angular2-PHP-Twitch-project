@@ -1,8 +1,35 @@
 body{
     width: 1024px;
     margin: 0 auto;
+    font-family: Verdana;
+    line-height: 25px;
 }
 
 .page-header {
 
+}
+
+.logo {
+    width: 100px;
+    float: left;
+}
+h1 {
+    font-family: 'Titillium Web', sans-serif;
+    color: #00d8ff;
+}
+.mainData  {
+    margin-left: 114px;
+    margin-top: 25px;
+}
+.react-data-block {
+    margin-top: 25px;
+}
+.row {
+    margin: 0;
+}
+
+.comment {
+    color: #828282;
+    clear: both;
+    padding: 5px;
 }
