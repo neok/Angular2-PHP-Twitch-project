@@ -16,9 +16,6 @@ var navigation = React.createClass({
                         <li role="presentation"><Link to="tutorial">Examples</Link></li>
                     </ul>
                 </nav>
-                <div className="mainData">
-                    {this.props.children}
-                </div>
             </div>
         );
     }

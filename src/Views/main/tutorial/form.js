@@ -1,6 +1,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var update = require('react-addons-update');
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 var FormClass = React.createClass({
     getInitialState: function () {
@@ -53,9 +54,15 @@ var Submitted = React.createClass({
     render: function() {
         return (
             <div>
-                {this.props.comment.map(function(comment) {
-                    return <Comment key={comment.authorName} {...comment} />
-                })}
+                <ReactCSSTransitionGroup
+                    className="animateExample"
+                    transitionEnterTimeout={250}
+                    transitionLeaveTimeout={250}
+                    transitionName="example">
+                        {this.props.comment.map(function(comment) {
+                            return <Comment key={comment.authorName} {...comment} />
+                        })}
+                    </ReactCSSTransitionGroup>
 
             </div>
         )

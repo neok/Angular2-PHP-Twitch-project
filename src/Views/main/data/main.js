@@ -91,6 +91,7 @@ var Tutorial = React.createClass({
                        Click here!
                    </CheckLink>
                <Tick />
+
            </div>
        )
    }

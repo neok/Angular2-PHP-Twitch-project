@@ -12,8 +12,11 @@
     "jquery": "~2.2.3",
     "livereactload": "^2.2.2",
     "nprogress": "^0.2.0",
+    "react-addons-clone-with-props": "^0.14.8",
+    "react-addons-css-transition-group": "^15.0.1",
     "react-addons-update": "^15.0.1",
     "react-route": "^1.0.3",
+    "react-router": "^2.2.2",
     "react-select": "^1.0.0-beta12",
     "underscore": "^1.8.3",
     "vinyl-buffer": "^1.0.0"
