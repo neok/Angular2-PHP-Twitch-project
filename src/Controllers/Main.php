@@ -68,6 +68,37 @@ class Main extends AbstractController
         $this->response->setContent($this->twig->render('form.html.twig', array()));
     }
 
+    public function product_list()
+    {
+        echo json_encode([
+            ['value' => 0, 'label' => 'All'],
+            ['value' => 1, 'label' => 'Product1'],
+            ['value' => 2, 'label' => 'Product2'],
+            ['value' => 3, 'label' => 'Product3'],
+
+        ]);
+    }
+    public function sku()
+    {
+        echo json_encode([
+            ['value' => 0, 'label' => 'All'],
+            ['value' => 1, 'label' => 'Buy me'],
+            ['value' => 2, 'label' => 'One time bro'],
+            ['value' => 3, 'label' => 'Crab'],
+
+        ]);
+    }
+    public function package()
+    {
+        echo json_encode([
+            ['value' => 0, 'label' => 'All'],
+            ['value' => 1, 'label' => 'One month'],
+            ['value' => 2, 'label' => 'one year'],
+            ['value' => 3, 'label' => 'Forever'],
+        
+        ]);
+    }
+
     public function data()
     {
         echo json_encode(array('result' => "<pre style='color:#000020;background:#f6f8ff;'><span style='color:#200080; font-weight:bold; '>var</span> React <span style='color:#308080; '>=</span> require<span style='color:#308080; '>(</span><span style='color:#800000; '>'</span><span style='color:#1060b6; '>react</span><span style='color:#800000; '>'</span><span style='color:#308080; '>)</span><span style='color:#406080; '>;</span>

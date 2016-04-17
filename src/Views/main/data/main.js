@@ -16,71 +16,7 @@ Avatar = require('./tuts/components.js').Avatar,
 CheckLink = require('./button.js').CheckLink,
 Tick = require('./tuts/components.js').Tick;
 
-var GameBox = React.createClass({
-    getInitialState: function() {
-        return {data: []}
-    },
 
-    handleFormSubmit: function(newItem) {
-        var data = this.state.data;
-        var newData = data.concat([newItem]);
-        this.setState({data: newData});
-    },
-
-    loadDataFromServer: function() {
-        $.ajax({
-            url:'json',
-            method: "GET",
-            dataType: "json",
-            cache: false,
-            success: function(data) {
-                this.setState({ data: data });
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(this.props.url, status, err.toString())
-            }.bind(this)
-        });
-
-    },
-    componentDidMount: function() {
-        this.loadDataFromServer();
-    },
-    render: function() {
-        return (
-            <div className="gameBox">
-                <GameList data={this.state.data} interval={2000} />
-                <FormClass onFormSubmit={this.handleFormSubmit} />
-            </div>
-        );
-    }
-});
-
-
-var GameInfo = React.createClass({
-    getInitialState: function() {
-        return {name: [], data: []};
-    },
-    componentDidMount: function() {
-        var currentGameName = this.props.params.name || '';
-        var that = this;
-        $.get('game/' + encodeURIComponent(currentGameName), function(result) {
-            that.setState({
-                name: currentGameName,
-                data: JSON.parse(result)
-            })
-        });
-    },
-    render: function() {
-        return (
-            <div className="ultraGame">
-                This is:
-                <p>{this.state.name} Stream List</p>
-
-                <StreamList data={this.state.data} />
-            </div>
-        );
-    }
-});
 
 var Tutorial = React.createClass({
    render: function() {

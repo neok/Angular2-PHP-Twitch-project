@@ -98,3 +98,19 @@ h1 {
 .page-transition-leave.page-transition-leave-active {
     opacity: 0;
 }
+
+.Select--multi {
+    width: 214px !important;
+    float: left !important;
+    margin: 10px 0 10px 10px !important;
+}
+.Select-menu-outer {
+    width: 214px !important;
+}
+
+.submit {
+    clear: both;
+    float: left;
+    width: 101px;
+    height: 45px;
+}

@@ -11,7 +11,7 @@ var MainPage = React.createClass({
     render: function () {
         return (
             <div className="branding">
-                Thinking in react.. sdfjasdifasdf
+                Thinking in react.. 
             </div>
         )
     }
@@ -27,6 +27,9 @@ ReactDOM.render(
             <Route path="multiple" component={Tutorial.Multiple}/>
             <Route path="reusable" component={Tutorial.Reusable}/>
             <Route path="form" component={Tutorial.Form}/>
+            <Route path="advanced" component={Tutorial.Advanced} />
+            <Route path="streams" component={Tutorial.Game} />
+            <Route path="games/:game" component={Tutorial.GameInfo} />
         </Route>
     </Router>
     , document.getElementById('app'));
