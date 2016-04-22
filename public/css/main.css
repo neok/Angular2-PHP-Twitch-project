@@ -114,3 +114,12 @@ h1 {
     width: 101px;
     height: 45px;
 }
+
+.gameInfo .streamList {
+
+}
+
+.fullWidth {
+    height: 1000px;
+    width: 1024px;
+}

@@ -55,24 +55,24 @@ var GameList = React.createClass({
 
 var GameItem = React.createClass({
     getInitialState: function() {
-        return { name: ''}
+        return { name: '', className: "gameInfo"}
     },
     toggleList: function(){
 
         if (this.state.name == '') {
-            this.setState({name: this.props.name})
+            this.setState({name: this.props.name, className: "gameInfo fullWidth"})
         } else {
-            this.setState({name: ''});
+            this.setState({name: '', className: "gameInfo"});
         }
-        console.log(this.state)
+
     },
 
     render: function() {
-
+            console.log(this.state.className)
             return (
                 <li className="item">
                     <img src={ this.props.img } alt="img" onClick={this.toggleList}/>
-                    <div className='gameInfo'>
+                    <div className={this.state.className}>
                         <GameInfo name={this.state.name}/>
                     </div>
                 </li>

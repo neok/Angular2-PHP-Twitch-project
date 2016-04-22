@@ -11,7 +11,7 @@ var MainPage = React.createClass({
     render: function () {
         return (
             <div className="branding">
-                Thinking in react.. 
+                Thinking in react..  i am your father
             </div>
         )
     }

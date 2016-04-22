@@ -6,7 +6,7 @@ var navigation = React.createClass({
     render: function() {
 
         return (<div className="pageHeader">
-                <img className="logo" src={this.props.logo_path} alt="logo" />
+                <Link role="presentation" to ="/"><img className="logo" src={this.props.logo_path} alt="logo" /></Link>
                 <h1>{this.props.header_text}</h1>
                 <nav>
                     <ul className="nav nav-pills">
