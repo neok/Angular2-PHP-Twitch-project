@@ -215,6 +215,7 @@ var PackageList = React.createClass({
                 && next.sku != ''
                 && next.sku !== this.state.sku
         ) {
+
             setTimeout(function() {
                 $.post('package',
                     {
