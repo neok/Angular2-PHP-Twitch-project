@@ -8,10 +8,10 @@ var opts = [
         value: 0, label: "All"
     },
     {
-        value: 1, label: "Kromtech"
+        value: 1, label: "Single"
     },
     {
-        value: 2, label: "MacKeeper"
+        value: 2, label: "Other"
     }
 ];
 

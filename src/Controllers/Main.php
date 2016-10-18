@@ -33,8 +33,7 @@ class Main extends AbstractController
             $result = $this->getTwitchService()->searchGame($args['id']);
         }
         echo json_encode($result);
-//        $this->response->setContent($this->twig->render('games.html.twig',
-//            ['game_list' => $result]));
+
     }
 
     public function product($args)
@@ -43,8 +42,8 @@ class Main extends AbstractController
         if ($data == 0) {
             $result = [
               ["value" => 0, "label" => "All"],
-              ["value" => 1, "label" => "PckeeperLive2014"],
-              ["value" => 2, "label" => "BroImbaLurker"]
+              ["value" => 1, "label" => "Test"],
+              ["value" => 2, "label" => "Test2"]
             ];
         } else {
             $result = [
@@ -95,7 +94,7 @@ class Main extends AbstractController
             ['value' => 1, 'label' => 'One month'],
             ['value' => 2, 'label' => 'one year'],
             ['value' => 3, 'label' => 'Forever'],
-        
+
         ]);
     }
 

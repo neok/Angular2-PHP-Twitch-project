@@ -7,6 +7,7 @@ class TwitchKraken
 {
 
     const API_URL = 'https://api.twitch.tv/kraken/';
+    const CLIENT_SECRET = '2vl026om6vbi20b1axdkec2xtwcmt2x';
 
     /**
      * @var Client
@@ -29,7 +30,9 @@ class TwitchKraken
         $data = $this->cache->get('games');
 
         if (!$data) {
-            $result = $this->client->request('GET', self::API_URL . 'games/top?limit=10&offset=0');
+            $result = $this->client->request('GET', self::API_URL . 'games/top?limit=10&offset=0',
+                ['headers' =>  ['Client-ID' => self::CLIENT_SECRET]]
+            );
             $data = [];
             if ($result->getStatusCode() == '200') {
                 $data  = $this->processBody(json_decode($result->getBody()->getContents()));
@@ -48,7 +51,8 @@ class TwitchKraken
 
         if (!$data) {
             $result = $this->client->request('GET',
-                self::API_URL . 'search/streams?q=' . urlencode((string)$gameName) . '&limit=100&offset=0');
+                self::API_URL . 'search/streams?q=' . urlencode((string)$gameName) . '&limit=100&offset=0',
+                ['headers' =>  ['Client-ID' => self::CLIENT_SECRET]]);
             if ($result->getStatusCode() == '200') {
                 $data = $this->processStreams(json_decode($result->getBody()->getContents()));
                 $this->cache->set('search_' . $gameName, $data, 300);
