@@ -7,7 +7,7 @@ class TwitchKraken
 {
 
     const API_URL = 'https://api.twitch.tv/kraken/';
-    const CLIENT_SECRET = '2vl026om6vbi20b1axdkec2xtwcmt2x';
+    const CLIENT_SECRET = 'test';
 
     /**
      * @var Client
