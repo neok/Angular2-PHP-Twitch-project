@@ -7,4 +7,4 @@ memcached:
   host: 'INSERT'
   port: 11211
 twitch:
-  secret: 'INSERT'
+  secret: '2vl026om6vbi20b1axdkec2xtwcmt2x'

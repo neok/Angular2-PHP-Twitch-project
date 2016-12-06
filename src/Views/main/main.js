@@ -23,11 +23,6 @@ ReactDOM.render(
 
         <Route path="/" component={Tutorial.Index}>
             <IndexRoute component={MainPage}/>
-            <Route path="interactive" component={Tutorial.Interactive}/>
-            <Route path="multiple" component={Tutorial.Multiple}/>
-            <Route path="reusable" component={Tutorial.Reusable}/>
-            <Route path="form" component={Tutorial.Form}/>
-            <Route path="advanced" component={Tutorial.Advanced} />
             <Route path="streams" component={Tutorial.Game} />
             <Route path="games/:game" component={Tutorial.GameInfo} />
         </Route>
