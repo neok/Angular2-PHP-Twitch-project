@@ -9,13 +9,13 @@ var React = require('react'),
     Game = require('./tutorial/game.js').Game;
 var ReactComponent = require('react').Component;
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
-var opts = [{id: 1, text:"test"}, {id:2, text:"test2"}];
+var opts = [{id: 1, text: "test"}, {id: 2, text: "test2"}];
 
 var Multiple = React.createClass({
-    render: function() {
+    render: function () {
         return (
             <div className="avatar">
-                <Avatar pagename="100000529752457" />
+                <Avatar pagename="100000529752457"/>
                 <MyComponent results={opts}/>
 
             </div>
@@ -24,10 +24,10 @@ var Multiple = React.createClass({
 });
 
 var Index = React.createClass({
-    render: function() {
+    render: function () {
         return (
             <div>
-                <Navigation header_text="Reactjs in action" logo_path="/public/img/react-logo.png" />
+                <Navigation header_text="Reactjs in action" logo_path="/public/img/react-logo.png"/>
                 <div className="mainData">
                     <ReactCSSTransitionGroup
                         component="div"
@@ -47,11 +47,11 @@ var Index = React.createClass({
 
 
 module.exports = {
-    Index : Index,
+    Index: Index,
     Interactive: Button,
     Multiple: Multiple,
     Reusable: Reusable,
     Form: FormClass,
     Advanced: Advanced,
-    Game:Game
+    Game: Game
 }

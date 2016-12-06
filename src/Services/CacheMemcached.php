@@ -1,29 +1,45 @@
 <?php
+
 namespace Twitch\Services;
 
+/**
+ * Class CacheMemcached
+ */
 class CacheMemcached implements CacheInterface
 {
-    const CACHE_NAME = 'mc';
+    const CACHE_NAME = 'memcached';
+    /** @var \Memcached */
     protected $instance;
 
     /**
      * CacheMemcached constructor.
-     * @todo set host and name port from config
+     *
+     * @param string $host
+     * @param int    $port
      */
-    public function __construct()
+    public function __construct($host, $port)
     {
         $this->instance = new \Memcached(self::CACHE_NAME);
-        $this->instance->addServer('localhost', 11211);
+        $this->instance->addServer($host, $port);
     }
 
+    /** {@inheritdoc} */
     public function set($key, $value, $ttl)
     {
-        $this->instance->set((string) $key, $value,  (int) $ttl);
+        $this->instance->set((string)$key, $value, (int)$ttl);
+
         return $this;
     }
 
+    /** {@inheritdoc} */
     public function get($key)
     {
-        return $this->instance->get((string) $key);
+        return $this->instance->get((string)$key);
+    }
+
+    /** {@inheritdoc} */
+    public function contains($key)
+    {
+        return (bool)$this->get($key);
     }
 }

@@ -8,5 +8,5 @@ return [
     ['GET', '/data', ['Twitch\Controllers\Main', 'data'], ['']],
     ['POST', '/product_list', ['Twitch\Controllers\Main', 'product_list'], ['']],
     ['POST', '/sku', ['Twitch\Controllers\Main', 'sku'], ['']],
-    ['POST', '/package', ['Twitch\Controllers\Main', 'package'], ['']]
+    ['POST', '/package', ['Twitch\Controllers\Main', 'package'], ['']],
 ];

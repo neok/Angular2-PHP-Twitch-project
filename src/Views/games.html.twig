@@ -4,7 +4,7 @@
 
 
     {% for game in game_list %}
-        <div class="col-md-4"><a href="/stream/{{ game.id }}"> <img src="{{ game.preview }}" alt="img" /></a>
+        <div class="col-md-4"><a href="/stream/{{ game.id }}"> <img src="{{ game.preview }}" alt="img"/></a>
             <p><strong>Streamer:</strong> {{ game.name|e }}</p>
             <span><strong>Viewers count:</strong> {{ game.viewers|e }}</span>
 

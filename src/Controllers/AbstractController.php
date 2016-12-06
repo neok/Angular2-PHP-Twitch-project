@@ -1,6 +1,6 @@
 <?php
-namespace Twitch\Controllers;
 
+namespace Twitch\Controllers;
 
 use Pimple\Container;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,6 +34,7 @@ class AbstractController
 
     /**
      * AbstractController constructor.
+     *
      * @param Container $container
      */
     public function __construct(Container $container)
@@ -59,6 +60,4 @@ class AbstractController
     {
         return $this->container;
     }
-
-
 }

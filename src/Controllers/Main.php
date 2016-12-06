@@ -1,10 +1,12 @@
 <?php
+
 namespace Twitch\Controllers;
 
-use Pimple\Container;
-use Symfony\Component\HttpFoundation\Response;
 use Twitch\Services\TwitchKraken;
 
+/**
+ * Class Main
+ */
 class Main extends AbstractController
 {
     /**
@@ -13,14 +15,10 @@ class Main extends AbstractController
      */
     public function index()
     {
-        $this->response->setContent($this->twig->render('index.html.twig',
-            ['games' => $this->getTwitchService()->getGames()]));
-
+        $this->response->setContent($this->twig->render('index.html.twig', ['games' => $this->getTwitchService()->getGames()]));
     }
 
-    /**
-     *
-     */
+
     public function json()
     {
         echo json_encode($this->getTwitchService()->getGames());
@@ -39,15 +37,15 @@ class Main extends AbstractController
     public function product($args)
     {
         $data = $args['id'];
-        if ($data == 0) {
+        if ($data === 0) {
             $result = [
-              ["value" => 0, "label" => "All"],
-              ["value" => 1, "label" => "Test"],
-              ["value" => 2, "label" => "Test2"]
+                ["value" => 0, "label" => "All"],
+                ["value" => 1, "label" => "Test"],
+                ["value" => 2, "label" => "Test2"],
             ];
         } else {
             $result = [
-                ["value" => 2, "label" => "BroImbaLurker"]
+                ["value" => 2, "label" => "BroImbaLurker"],
             ];
         }
         echo json_encode($result);
@@ -77,16 +75,18 @@ class Main extends AbstractController
 
         ]);
     }
+
     public function sku()
     {
         echo json_encode([
             ['value' => 0, 'label' => 'All'],
             ['value' => 1, 'label' => 'Buy me'],
             ['value' => 2, 'label' => 'One time bro'],
-            ['value' => 3, 'label' => 'Crab'],
+            ['value' => 3, 'label' => 'Two time brah'],
 
         ]);
     }
+
     public function package()
     {
         echo json_encode([
@@ -100,7 +100,8 @@ class Main extends AbstractController
 
     public function data()
     {
-        echo json_encode(array('result' => "<pre style='color:#000020;background:#f6f8ff;'><span style='color:#200080; font-weight:bold; '>var</span> React <span style='color:#308080; '>=</span> require<span style='color:#308080; '>(</span><span style='color:#800000; '>'</span><span style='color:#1060b6; '>react</span><span style='color:#800000; '>'</span><span style='color:#308080; '>)</span><span style='color:#406080; '>;</span>
+        echo json_encode(array(
+            'result' => "<pre style='color:#000020;background:#f6f8ff;'><span style='color:#200080; font-weight:bold; '>var</span> React <span style='color:#308080; '>=</span> require<span style='color:#308080; '>(</span><span style='color:#800000; '>'</span><span style='color:#1060b6; '>react</span><span style='color:#800000; '>'</span><span style='color:#308080; '>)</span><span style='color:#406080; '>;</span>
 <span style='color:#200080; font-weight:bold; '>var</span> DynamicButton <span style='color:#308080; '>=</span> React<span style='color:#308080; '>.</span>createClass<span style='color:#308080; '>(</span><span style='color:#406080; '>{</span>
     getInitialState<span style='color:#406080; '>:</span> <span style='color:#200080; font-weight:bold; '>function</span><span style='color:#308080; '>(</span><span style='color:#308080; '>)</span> <span style='color:#406080; '>{</span>
         <span style='color:#200080; font-weight:bold; '>return</span> <span style='color:#406080; '>{</span>
@@ -161,6 +162,7 @@ class Main extends AbstractController
 module<span style='color:#308080; '>.</span>exports <span style='color:#308080; '>=</span> <span style='color:#406080; '>{</span>
     DynamicButton<span style='color:#406080; '>:</span> DynamicButton
 <span style='color:#406080; '>}</span>
-</pre>"));
+</pre>",
+        ));
     }
 }

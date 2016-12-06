@@ -76,4 +76,4 @@ var TickTack = React.createClass({
 module.exports = {
     Avatar: Avatar,
     Tick: TickTack
-}
+};

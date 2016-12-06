@@ -40,10 +40,6 @@ var Advanced = React.createClass({
     },
     submit: function () {
         var refs = this.refs;
-        console.log(refs.company)
-        console.log(refs.product)
-        console.log(refs.sku)
-        console.log(refs.package)
     },
     render: function() {
         return (

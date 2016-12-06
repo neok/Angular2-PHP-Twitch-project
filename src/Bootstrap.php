@@ -1,12 +1,13 @@
 <?php
+
 namespace Twitch;
+
 use GuzzleHttp\Client;
 use Pimple\Container;
-use Pimple\Tests\Fixtures\PimpleServiceProvider;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Twitch\Controllers\Main;
-use Twitch\Controllers\MainController;
+use Symfony\Component\Yaml\Yaml;
 use Twitch\Services\CacheMemcached;
 use Twitch\Services\TwitchKraken;
 use Whoops\Handler\PrettyPageHandler;
@@ -16,7 +17,7 @@ require __DIR__ . './../vendor/autoload.php';
 error_reporting(E_ALL);
 
 
-$environment = 'development';
+$environment = 'dev';
 
 $whoops = new \Whoops\Run;
 
@@ -29,9 +30,8 @@ if ($environment !== 'production') {
 }
 $whoops->register();
 $request = Request::createFromGlobals();
-$sc = new PimpleServiceProvider();
 
-$routeDefinitionCallback = function(\FastRoute\RouteCollector $routeCollector) {
+$routeDefinitionCallback = function (\FastRoute\RouteCollector $routeCollector) {
     $routes = include(__DIR__ . '/Routers/default.php');
     foreach ($routes as $route) {
         $routeCollector->addRoute($route[0], $route[1], $route[2]);
@@ -58,27 +58,43 @@ switch ($routeInfo[0]) {
         $method = $routeInfo[1][1];
         $vars = $routeInfo[2];
 
-        $container[$className] = function() use ($container, $className) {
+        $container['config'] = function () use ($environment) {
+            try {
+                return Yaml::parse(file_get_contents(__DIR__ . '/../config/parameters.' . ($environment === 'dev' ? 'dev.' : '') . 'yml'),
+                    false, true, true);
+            } catch (\Exception $e) {
+                printf("Unable to parse the YAML string: %s", $e->getMessage());
+            }
+        };
+
+        $container[$className] = function () use ($container, $className) {
             return new $className($container);
         };
 
-        $container['db'] = function($c) {
-            return new \PDO('mysql:host=localhost;dbname=db_crm', 'root', 'root');
+        $container['db'] = function ($container) {
+            $dbConfig = $container['config']->database;
+
+            return new \PDO('mysql:host=' . $dbConfig->host . ';dbname=' . $dbConfig->name, $dbConfig->user,
+                $dbConfig->password);
         };
-        $container['twig'] = function($t) {
+        $container['twig'] = function ($t) {
             return new \Twig_Environment(new \Twig_Loader_Filesystem(__DIR__ . '/Views/'));
         };
-        $container['response'] = function() use ($response) {
+        $container['response'] = function () use ($response) {
             return $response;
         };
-        $container['request'] = function() use ($response) {
+        $container['request'] = function () use ($response) {
             return $response;
         };
 
-        $container['twitch'] = function ($c)  {
-            return new TwitchKraken(new Client(), new CacheMemcached());
-        };
+        $container['twitch'] = function ($container) {
 
+            return new TwitchKraken(
+                new Client(),
+                new CacheMemcached($container['config']->memcached->host, $container['config']->memcached->port),
+                $container['config']->twitch->secret
+            );
+        };
 
         $container[$className]->$method($vars);
 

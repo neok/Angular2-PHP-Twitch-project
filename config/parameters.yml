@@ -1,0 +1,10 @@
+database:
+  name: 'INSERT'
+  user: 'INSERT'
+  password: 'INSERT'
+  host: 'INSERT'
+memcached:
+  host: 'INSERT'
+  port: 11211
+twitch:
+  secret: 'INSERT'

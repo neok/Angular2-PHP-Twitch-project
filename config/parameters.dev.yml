@@ -1,0 +1,10 @@
+database:
+  name: 'db_crm'
+  user: 'user'
+  password: 'password'
+  host: 'localhost'
+memcached:
+  host: 'localhost'
+  port: 11211
+twitch:
+  secret: 'CODE HERE'

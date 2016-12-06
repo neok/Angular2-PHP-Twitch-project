@@ -1,4 +1,5 @@
 <?php
+
 namespace Twitch\Services;
 
 /**
@@ -11,8 +12,9 @@ interface CacheInterface
      * Set value to cache
      *
      * @param string $key
-     * @param mixed $value
-     * @param int $ttl
+     * @param mixed  $value
+     * @param int    $ttl
+     *
      * @return mixed
      */
     public function set($key, $value, $ttl);
@@ -21,7 +23,17 @@ interface CacheInterface
      * Get value from cache
      *
      * @param string $key
+     *
      * @return mixed
      */
     public function get($key);
+
+    /**
+     * Check if value exists.
+     *
+     * @param $key
+     *
+     * @return bool
+     */
+    public function contains($key);
 }
