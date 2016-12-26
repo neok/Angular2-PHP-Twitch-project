@@ -37,8 +37,8 @@ $routeDefinitionCallback = function (\FastRoute\RouteCollector $routeCollector) 
         $routeCollector->addRoute($route[0], $route[1], $route[2]);
     }
 };
-$dispatcher = \FastRoute\simpleDispatcher($routeDefinitionCallback);
-$routeInfo = $dispatcher->dispatch($request->getMethod(), $request->getPathInfo());
+$dispatcher              = \FastRoute\simpleDispatcher($routeDefinitionCallback);
+$routeInfo               = $dispatcher->dispatch($request->getMethod(), $request->getPathInfo());
 
 $response = new Response();
 
@@ -55,8 +55,8 @@ switch ($routeInfo[0]) {
         break;
     case \FastRoute\Dispatcher::FOUND:
         $className = $routeInfo[1][0];
-        $method = $routeInfo[1][1];
-        $vars = $routeInfo[2];
+        $method    = $routeInfo[1][1];
+        $vars      = $routeInfo[2];
 
         $container['config'] = function () use ($environment) {
             try {
@@ -71,19 +71,19 @@ switch ($routeInfo[0]) {
             return new $className($container);
         };
 
-        $container['db'] = function ($container) {
+        $container['db']       = function ($container) {
             $dbConfig = $container['config']->database;
 
             return new \PDO('mysql:host=' . $dbConfig->host . ';dbname=' . $dbConfig->name, $dbConfig->user,
                 $dbConfig->password);
         };
-        $container['twig'] = function ($t) {
+        $container['twig']     = function ($t) {
             return new \Twig_Environment(new \Twig_Loader_Filesystem(__DIR__ . '/Views/'));
         };
         $container['response'] = function () use ($response) {
             return $response;
         };
-        $container['request'] = function () use ($response) {
+        $container['request']  = function () use ($response) {
             return $response;
         };
 
