@@ -85,7 +85,7 @@ class TwitchKraken
     {
         $result = [];
         $count  = 0;
-        foreach ($stream->streams as $key => $data) {
+        foreach ($stream->streams as $data) {
             if ($count >= self::LIMIT_PER_PAGE) {
                 break;
             }
