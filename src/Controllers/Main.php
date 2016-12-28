@@ -15,7 +15,9 @@ class Main extends AbstractController
      */
     public function index()
     {
-        $this->response->setContent($this->twig->render('index.html.twig', ['games' => $this->getTwitchService()->getGames()]));
+        $this->response->setContent(
+            $this->twig->render('index.html.twig', ['games' => $this->getTwitchService()->getGames()])
+        );
     }
 
     public function json()
@@ -28,7 +30,7 @@ class Main extends AbstractController
      */
     public function game($args)
     {
-        $result = array();
+        $result = [];
         if (array_key_exists('id', $args)) {
             $result = $this->getTwitchService()->searchGame($args['id']);
         }

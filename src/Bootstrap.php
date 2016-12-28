@@ -24,9 +24,11 @@ $whoops = new \Whoops\Run;
 if ($environment !== 'production') {
     $whoops->pushHandler(new PrettyPageHandler());
 } else {
-    $whoops->pushHandler(function ($e) {
-        echo 'Show friendly error page here';
-    });
+    $whoops->pushHandler(
+        function ($e) {
+            echo 'Show friendly error page here';
+        }
+    );
 }
 $whoops->register();
 $request = Request::createFromGlobals();
@@ -60,8 +62,12 @@ switch ($routeInfo[0]) {
 
         $container['config'] = function () use ($environment) {
             try {
-                return Yaml::parse(file_get_contents(__DIR__ . '/../config/parameters.' . ($environment === 'dev' ? 'dev.' : '') . 'yml'),
-                    false, true, true);
+                return Yaml::parse(
+                    file_get_contents(
+                        __DIR__ . '/../config/parameters.' . ($environment === 'dev' ? 'dev.' : '') . 'yml'
+                    ),
+                    false, true, true
+                );
             } catch (\Exception $e) {
                 printf("Unable to parse the YAML string: %s", $e->getMessage());
             }
@@ -74,8 +80,10 @@ switch ($routeInfo[0]) {
         $container['db']       = function ($container) {
             $dbConfig = $container['config']->database;
 
-            return new \PDO('mysql:host=' . $dbConfig->host . ';dbname=' . $dbConfig->name, $dbConfig->user,
-                $dbConfig->password);
+            return new \PDO(
+                'mysql:host=' . $dbConfig->host . ';dbname=' . $dbConfig->name, $dbConfig->user,
+                $dbConfig->password
+            );
         };
         $container['twig']     = function ($t) {
             return new \Twig_Environment(new \Twig_Loader_Filesystem(__DIR__ . '/Views/'));

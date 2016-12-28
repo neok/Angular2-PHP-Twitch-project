@@ -26,7 +26,7 @@ class CacheMemcached implements CacheInterface
     /** {@inheritdoc} */
     public function set($key, $value, $ttl)
     {
-        $this->instance->set((string)$key, $value, (int)$ttl);
+        $this->instance->set((string) $key, $value, (int) $ttl);
 
         return $this;
     }
@@ -34,12 +34,12 @@ class CacheMemcached implements CacheInterface
     /** {@inheritdoc} */
     public function get($key)
     {
-        return $this->instance->get((string)$key);
+        return $this->instance->get((string) $key);
     }
 
     /** {@inheritdoc} */
     public function contains($key)
     {
-        return (bool)$this->get($key);
+        return (bool) $this->get($key);
     }
 }

@@ -6,16 +6,17 @@ use GuzzleHttp\Client;
 
 /**
  * Class TwitchKraken
- * This class can be improved, but i am not gonna focus on it, mainly because its created to get some basic info from twitch.
+ * This class can be improved, but i am not gonna focus on it, mainly because its created to get some basic info from
+ * twitch.
  */
 class TwitchKraken
 {
-    const API_URL = 'https://api.twitch.tv/kraken/';
+    const API_URL        = 'https://api.twitch.tv/kraken/';
     const LIMIT_PER_PAGE = 10;
 
-    /** @var Client  */
+    /** @var Client */
     private $client;
-    /** @var CacheMemcached  */
+    /** @var CacheMemcached */
     private $cache;
     /** @var  string */
     private $secret;
@@ -39,10 +40,11 @@ class TwitchKraken
         $data = $this->cache->get('games');
 
         if (!$data) {
-            $result = $this->client->request('GET', self::API_URL . 'games/top?limit=10&offset=0',
+            $result = $this->client->request(
+                'GET', self::API_URL . 'games/top?limit=10&offset=0',
                 ['headers' => ['Client-ID' => $this->secret]]
             );
-            $data = [];
+            $data   = [];
             if ($result->getStatusCode() === 200) {
                 $data = $this->processBody(json_decode($result->getBody()->getContents()));
                 $this->cache->set('games', $data, 300);
@@ -59,9 +61,11 @@ class TwitchKraken
         $data = $this->cache->get('search_' . $gameName);
 
         if (!$data) {
-            $result = $this->client->request('GET',
-                self::API_URL . 'search/streams?q=' . urlencode((string)$gameName) . '&limit=100&offset=0',
-                ['headers' => ['Client-ID' => $this->secret]]);
+            $result = $this->client->request(
+                'GET',
+                self::API_URL . 'search/streams?q=' . urlencode((string) $gameName) . '&limit=100&offset=0',
+                ['headers' => ['Client-ID' => $this->secret]]
+            );
             if ($result->getStatusCode() === 200) {
                 $data = $this->processStreams(json_decode($result->getBody()->getContents()));
                 $this->cache->set('search_' . $gameName, $data, 300);
@@ -80,7 +84,7 @@ class TwitchKraken
     private function processStreams(\StdClass $stream)
     {
         $result = [];
-        $count = 0;
+        $count  = 0;
         foreach ($stream->streams as $key => $data) {
             if ($count >= self::LIMIT_PER_PAGE) {
                 break;
