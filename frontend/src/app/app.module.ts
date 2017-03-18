@@ -5,8 +5,6 @@ import { _404Component } from './components/404-component/_404.component';
 import { routing } from './app.routing';
 import { AppComponent } from './app.component';
 
-
-
 @NgModule({
   imports:      [ BrowserModule, routing ],
   declarations: [ MainComponent, AppComponent, _404Component ],
