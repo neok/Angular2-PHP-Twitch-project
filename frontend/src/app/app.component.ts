@@ -2,6 +2,12 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'my-app',
-  template: `<h1>Twitch php example project by  {{name}}</h1>`,
+  template: `
+<a [routerLink]="['/main']">Main</a>
+<router-outlet></router-outlet>
+`,
 })
-export class AppComponent  { name = 'Peter Popelyshko'; }
+
+export class AppComponent  {
+
+}
