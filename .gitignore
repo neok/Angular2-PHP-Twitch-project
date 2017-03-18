@@ -3,3 +3,16 @@
 /vendor/*
 /node_modules/*
 ./config/parameters.dev.yml
+
+frontend/node_modules
+frontend/jspm_packages
+frontend/npm-debug.log
+frontend/debug.log
+frontend/src/**/*.js
+frontend/!src/systemjs.config.extras.js
+frontend/!src/systemjs.config.js
+frontend/*.js.map
+frontend/e2e/**/*.js
+frontend/e2e/**/*.js.map
+frontend/_test-output
+frontend/_temp
