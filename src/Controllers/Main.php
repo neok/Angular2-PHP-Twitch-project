@@ -16,8 +16,9 @@ class Main extends AbstractController
     public function index()
     {
         $this->response->setContent(
-            $this->twig->render('index.html.twig', ['games' => $this->getTwitchService()->getGames()])
+            $this->twig->render('index.html.twig', ['games' => []])
         );
+//$this->getTwitchService()->getGames(
     }
 
     public function json()

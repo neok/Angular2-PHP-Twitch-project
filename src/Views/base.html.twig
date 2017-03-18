@@ -6,13 +6,17 @@
     <script src="/frontend/node_modules/core-js/client/shim.min.js"></script>
     <script src="/frontend/node_modules/zone.js/dist/zone.js"></script>
     <script src="/frontend/node_modules/systemjs/dist/system.src.js"></script>
-    <script src="/frontend/systemjs.config.js"></script>
+    <script src="/frontend/src/systemjs.config.js"></script>
     <script>
-        System.import('frontend/main.js').catch(function(err){ console.error(err); });
+        System.import('frontend/src/main.js').catch(function(err){ console.error(err); });
     </script>
     <title>Angular2 Twitch Example</title>
 </head>
 <body>
 <my-app>Loading AppComponent content here ...</my-app>
+{% block body %}
+
+
+{% endblock %}
 </body>
 </html>
